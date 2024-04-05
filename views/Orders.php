@@ -4,7 +4,7 @@ namespace views;
 
 class Orders
 {
-    public function toString()
+    public function toString($menus): false|string
     {
         ob_start();
         ?>
@@ -14,8 +14,17 @@ class Orders
                 <div class="form-group">
                     <label for="menu">Select Menu:</label>
                     <select class="form-control" id="menu" name="menu">
-                        <option value="1">Menu 1</option>
-                        <option value="2">Menu 2</option>
+                        <?php foreach ($menus as $menu) : ?>
+                            <option value="<?= $menu['id'] ?>">
+                                Menu n°<?= $menu['id'] ?>:
+                                <?php
+                                $dishNames = array_map(function($dish) {
+                                    return $dish['name'];
+                                }, $menu['dishes']);
+                                echo implode(', ', $dishNames);
+                                ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">

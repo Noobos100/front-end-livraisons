@@ -48,7 +48,7 @@ $menus = $apiHandler->fetchFromAPI($apiURL . '/menus');
 echo match ($page) {
     'home' => (new MainPage)->toString($menus),
     'create-menu' => (new CreateMenu())->toString($plats),
-    'orders' => (new Orders)->toString(),
+    'orders' => (new Orders)->toString($menus),
     'login' => (new Login)->toString(),
     default => '404 - Page not found',
 };

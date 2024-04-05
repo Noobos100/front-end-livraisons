@@ -2,13 +2,11 @@
 
 namespace views;
 
-use api\APIHandler;
-
 class CreateMenu
 {
-    function submitMenu()
+
+    function submitMenu($api_url): void
     {
-        $api_url = 'http://localhost:3000/menus';
         $data = [
             'name' => $_POST['name'],
             'price' => $_POST['price'],

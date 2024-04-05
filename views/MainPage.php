@@ -21,21 +21,18 @@ class MainPage {
                 <section class="hero">
                     <h2>Bienvenue dans notre application de restauration en ligne !</h2>
                     <p>Découvrez nos délicieux plats et créez votre menu personnalisé en quelques clics.</p>
-                    <a href="#" class="btn">Commencer</a>
                 </section>';
 
         // Ajout des menus récupérés depuis l'API
         $html .= '<section class="featured-menus">
-                    <h2>2 derniers menus créés</h2>';
-        for ($i = 0; $i < 2; $i++) {
-            $menu = $menus[$i];
+                    <h2>Menus créés</h2>';
+        foreach ($menus as $menu) {
             $html .= '<div class="menu-card">
                         <h3>' . $menu['userId'] . '\'s menu</h3>';
             foreach ($menu['dishes'] as $dish) {
                 $html .= '<p>' . $dish['name'] . ': ' . $dish['price'] . ' €</p>';
             }
-            $html .= '<a href="index.php?page=orders" class="btn">Commander</a>
-                  </div>';
+            $html .= '</div>';
         }
         $html .= '</section>';
 
