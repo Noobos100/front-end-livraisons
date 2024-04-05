@@ -30,9 +30,15 @@ $apiHandler = new APIHandler();
 
 // Parse the config.ini file
 $config = parse_ini_file('./includes/config.ini');
+if ($config === false) {
+    echo '<script>alert("Error: config.ini file not found");</script>';
+}
 
 // Now you can access the variables from the config.ini file
 $apiURL = $config['API_URL'];
+if ($apiURL === '') {
+    echo '<script>alert("Error: API_URL not found in config.ini");</script>';
+}
 
 // Use the $apiURL variable to fetch data from the API
 $plats = $apiHandler->fetchFromAPI($apiURL . '/plats');
