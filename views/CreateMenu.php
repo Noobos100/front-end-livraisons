@@ -9,22 +9,17 @@ class CreateMenu
     {
         $dishes = [];
         foreach ($_POST['dishes'] as $dish) {
-            foreach ($plats as $plat) {
-                if ($plat['id'] == $dish['id']) {
-                    $dishes[] = [
-                        'name' => $plat['name'],
-                        'price' => $plat['price'],
-                        'quantity' => $dish['quantity']
-                    ];
-                    break;
-                }
-            }
+            $dishes[] = [
+                'dishId' => $dish['id'],
+                'quantity' => $dish['quantity']
+            ];
         }
+
         $data = [
-            'name' => $_POST['name'],
-            'price' => $_POST['price'],
+            'userId' => '60d5ecf8cd7d410c3b6a739c', // replace this with the actual user id
             'dishes' => $dishes
         ];
+
         $options = [
             'http' => [
                 'method' => 'POST',
@@ -33,7 +28,7 @@ class CreateMenu
             ]
         ];
         $context = stream_context_create($options);
-        $result = file_get_contents($api_url.'/menus', false, $context);
+        $result = file_get_contents($api_url . '/menus-1.0-SNAPSHOT/api/menus', false, $context);
         if ($result === FALSE) {
             echo 'Error creating menu';
         } else {
