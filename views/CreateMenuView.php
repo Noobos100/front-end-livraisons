@@ -2,7 +2,7 @@
 
 namespace views;
 
-class CreateMenu
+class CreateMenuView
 {
 
     function submitMenu($api_url, $plats): void

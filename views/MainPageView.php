@@ -1,6 +1,6 @@
 <?php
 
-class MainPage {
+class MainPageView {
 
     function toString($menus): string
     {

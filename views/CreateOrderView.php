@@ -2,7 +2,7 @@
 
 namespace views;
 
-class Orders
+class CreateOrderView
 {
     public function toString($menus): false|string
     {

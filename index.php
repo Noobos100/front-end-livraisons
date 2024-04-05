@@ -1,8 +1,8 @@
 <?php
 // Get the page from the query string
-use views\CreateMenu;
-use views\Login;
-use views\Orders;
+use views\CreateMenuView;
+use views\LoginView;
+use views\CreateOrderView;
 
 // Get the data from the API
 use api\APIHandler;
@@ -20,10 +20,10 @@ $viewsPath = __DIR__ . '/views/';
 require_once $viewsPath . 'partials/NavigationMenu.php';
 
 // Include the views
-require_once $viewsPath . 'MainPage.php';
-require_once $viewsPath . 'CreateMenu.php';
-require_once $viewsPath . 'Orders.php';
-require_once $viewsPath . 'Login.php';
+require_once $viewsPath . 'MainPageView.php';
+require_once $viewsPath . 'CreateMenuView.php';
+require_once $viewsPath . 'CreateOrderView.php';
+require_once $viewsPath . 'LoginView.php';
 
 // Get the data from the API
 $apiHandler = new APIHandler();
@@ -45,14 +45,14 @@ $plats = $apiHandler->fetchFromAPI($apiURL . '/plats');
 $menus = $apiHandler->fetchFromAPI($apiURL . '/menus');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    (new CreateMenu)->submitMenu($apiURL, $plats);
+    (new CreateMenuView)->submitMenu($apiURL, $plats);
 }
 
 // Use a switch-case to load the correct view based on the page
 echo match ($page) {
-    'home' => (new MainPage)->toString($menus),
-    'create-menu' => (new CreateMenu())->toString($plats),
-    'orders' => (new Orders)->toString($menus),
-    'login' => (new Login)->toString(),
+    'home' => (new MainPageView)->toString($menus),
+    'create-menu' => (new CreateMenuView())->toString($plats),
+    'orders' => (new CreateOrderView)->toString($menus),
+    'login' => (new LoginView)->toString(),
     default => '404 - Page not found',
 };

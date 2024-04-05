@@ -2,7 +2,7 @@
 
 namespace views;
 
-class Login
+class LoginView
 {
     public function toString()
     {
