@@ -28,9 +28,9 @@ class MainPage {
                     <h2>Menus créés</h2>';
         foreach ($menus as $menu) {
             $html .= '<div class="menu-card">
-                        <h3>' . $menu['userId'] . '\'s menu</h3>';
+                <h3>' . $menu['userId'] . '\'s menu</h3>';
             foreach ($menu['dishes'] as $dish) {
-                $html .= '<p>' . $dish['name'] . ': ' . $dish['price'] . ' €</p>';
+                $html .= '<p>' . $dish['name'] . ' (Quantity: ' . $dish['quantity'] . '): ' . $dish['price'] . ' €</p>';
             }
             $html .= '</div>';
         }

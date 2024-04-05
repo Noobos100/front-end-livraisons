@@ -5,12 +5,25 @@ namespace views;
 class CreateMenu
 {
 
-    function submitMenu($api_url): void
+    function submitMenu($api_url, $plats): void
     {
+        $dishes = [];
+        foreach ($_POST['dishes'] as $dish) {
+            foreach ($plats as $plat) {
+                if ($plat['id'] == $dish['id']) {
+                    $dishes[] = [
+                        'name' => $plat['name'],
+                        'price' => $plat['price'],
+                        'quantity' => $dish['quantity']
+                    ];
+                    break;
+                }
+            }
+        }
         $data = [
             'name' => $_POST['name'],
             'price' => $_POST['price'],
-            'dishes' => $_POST['dishes']
+            'dishes' => $dishes
         ];
         $options = [
             'http' => [
@@ -20,7 +33,7 @@ class CreateMenu
             ]
         ];
         $context = stream_context_create($options);
-        $result = file_get_contents($api_url, false, $context);
+        $result = file_get_contents($api_url.'/menus', false, $context);
         if ($result === FALSE) {
             echo 'Error creating menu';
         } else {
@@ -111,10 +124,6 @@ class CreateMenu
         <?php
         return ob_get_clean();
     }
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    (new CreateMenu)->submitMenu();
 }
 
 ?>

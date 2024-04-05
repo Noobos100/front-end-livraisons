@@ -44,6 +44,10 @@ if ($apiURL === '') {
 $plats = $apiHandler->fetchFromAPI($apiURL . '/plats');
 $menus = $apiHandler->fetchFromAPI($apiURL . '/menus');
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    (new CreateMenu)->submitMenu($apiURL, $plats);
+}
+
 // Use a switch-case to load the correct view based on the page
 echo match ($page) {
     'home' => (new MainPage)->toString($menus),
