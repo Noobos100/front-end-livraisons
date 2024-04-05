@@ -28,7 +28,7 @@ class CreateMenu
             ]
         ];
         $context = stream_context_create($options);
-        $result = file_get_contents($api_url . '/menus-1.0-SNAPSHOT/api/menus', false, $context);
+        $result = file_get_contents($api_url . '/menus', false, $context);
         if ($result === FALSE) {
             echo 'Error creating menu';
         } else {
