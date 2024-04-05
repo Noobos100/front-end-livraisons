@@ -1,7 +1,19 @@
 <?php
 
+/**
+ * Class MainPageView
+ * @package views
+ * Cette classe permet de générer la page d'accueil de l'application
+ * Elle contient une méthode toString qui permet de générer la page d'accueil
+ * Elle contient un message de bienvenue et une liste des menus créés par les utilisateurs
+ * Elle affiche les plats et les prix de chaque menu
+ */
 class MainPageView {
 
+    /**
+     * @param $menus
+     * @return string
+     */
     function toString($menus): string
     {
         $html = '<!DOCTYPE html>

@@ -2,9 +2,22 @@
 
 namespace views;
 
+/**
+ * Class CreateMenuView
+ * @package views
+ * Cette classe permet de créer un formulaire pour créer un menu
+ * Elle contient une méthode submitMenu qui permet de soumettre le formulaire et de créer un menu
+ * Elle contient une méthode toString qui permet de générer le formulaire pour créer un menu
+ * Elle contient un script JavaScript pour ajouter des champs de sélection de plats, quantités et prix dynamiquement
+ */
 class CreateMenuView
 {
 
+    /**
+     * @param $api_url
+     * @param $plats
+     * @return void
+     */
     function submitMenu($api_url, $plats): void
     {
         $dishes = [];
@@ -36,6 +49,10 @@ class CreateMenuView
         }
     }
 
+    /**
+     * @param $plats
+     * @return false|string
+     */
     public static function toString($plats)
     {
         ob_start();

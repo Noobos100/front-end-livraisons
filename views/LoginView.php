@@ -2,8 +2,19 @@
 
 namespace views;
 
+/**
+ * Class LoginView
+ * @package views
+ * Cette classe permet de créer un formulaire de connexion
+ * Elle contient une méthode toString qui permet de générer le formulaire de connexion
+ * Elle contient un formulaire de connexion avec un champ pour l'identifiant et un champ pour le mot de passe
+ * Elle contient un bouton pour envoyer le formulaire
+ */
 class LoginView
 {
+    /**
+     * @return false|string
+     */
     public function toString()
     {
         ob_start();

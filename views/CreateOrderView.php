@@ -2,8 +2,17 @@
 
 namespace views;
 
+/**
+ * Class CreateOrderView
+ * @package views
+ * Cette classe permet de créer un formulaire pour passer une commande
+ */
 class CreateOrderView
 {
+    /**
+     * @param $menus
+     * @return false|string
+     */
     public function toString($menus): false|string
     {
         ob_start();
