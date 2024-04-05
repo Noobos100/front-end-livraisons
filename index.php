@@ -1,66 +1,48 @@
 <?php
+// Get the page from the query string
+use views\CreateMenu;
+use views\Login;
+use views\Orders;
 
-function fetchMenusFromAPI() {
-    $api_url = 'https://660eeb4a356b87a55c5074b6.mockapi.io/api/v1/plat';
-    $menus_json = file_get_contents($api_url);
-    $menus = json_decode($menus_json, true);
-    return $menus;
-}
+// Get the data from the API
+use api\APIHandler;
 
-function toString() {
-    $menus = fetchMenusFromAPI();
+// get APIHandler class
+require_once __DIR__ . '/api/api/APIHandler.php';
 
-    $html = '<!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sub-er Eats</title>
-        <link rel="stylesheet" href="assets/css/app.css">
-    </head>
-    <body>
-        <header>
-            <h1>Bienvenue sur Sub-er Eats</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Menus</a></li>
-                    <li><a href="#">Commander</a></li>
-                    <li><a href="#">À propos</a></li>
-                </ul>
-            </nav>
-        </header>
+// Define the path to the views folder
+$page = $_GET['page'] ?? 'home';
 
-        <main>
-            <section class="hero">
-                <h2>Bienvenue dans notre application de restauration en ligne !</h2>
-                <p>Découvrez nos délicieux plats et créez votre menu personnalisé en quelques clics.</p>
-                <a href="#" class="btn">Commencer</a>
-            </section>';
+// Define the path to the views folder
+$viewsPath = __DIR__ . '/views/';
 
-    // Ajout des menus récupérés depuis l'API
-    $html .= '<section class="featured-menus">
-                    <h2>Nos Menus en Vedette</h2>';
-    foreach ($menus as $menu) {
-        $html .= '<div class="menu-card">
-                        <h3>' . $menu['name'] . '</h3>
-                        <p>' . $menu['description'] . '</p>
-                        <p>Prix: ' . $menu['price'] . ' €</p>
-                    </div>';
-    }
-    $html .= '</section>';
+// Include the NavigationMenu view
+require_once $viewsPath . 'partials/NavigationMenu.php';
 
-    $html .= '</main>
+// Include the views
+require_once $viewsPath . 'MainPage.php';
+require_once $viewsPath . 'CreateMenu.php';
+require_once $viewsPath . 'Orders.php';
+require_once $viewsPath . 'Login.php';
 
-        <footer>
-            <p>&copy; 2024 Votre Application de Restauration. Tous droits réservés.</p>
-        </footer>
+// Get the data from the API
+$apiHandler = new APIHandler();
 
-        <script src="assets/js/scripts.js"></script>
-    </body>
-    </html>';
+// Parse the config.ini file
+$config = parse_ini_file('./includes/config.ini');
 
-    return $html;
-}
+// Now you can access the variables from the config.ini file
+$apiURL = $config['API_URL'];
 
-echo toString();
+// Use the $apiURL variable to fetch data from the API
+$plats = $apiHandler->fetchFromAPI($apiURL . '/plats');
+$menus = $apiHandler->fetchFromAPI($apiURL . '/menus');
+
+// Use a switch-case to load the correct view based on the page
+echo match ($page) {
+    'home' => (new MainPage)->toString($menus),
+    'create-menu' => (new CreateMenu())->toString($plats),
+    'orders' => (new Orders)->toString(),
+    'login' => (new Login)->toString(),
+    default => '404 - Page not found',
+};
